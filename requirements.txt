@@ -21,6 +21,6 @@ python-multipart==0.0.9  # For file uploads
 python-dotenv==1.0.1
 
 # Development
-pytest==8.0.0
+pytest==7.4.4
 pytest-asyncio==0.23.4
 httpx==0.26.0  # For testing FastAPI
