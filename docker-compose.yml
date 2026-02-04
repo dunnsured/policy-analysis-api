@@ -1,0 +1,43 @@
+# Rhône Risk Policy Analysis API - Docker Compose
+# For local development and testing
+
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: rhone-policy-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - WEBHOOK_SECRET=${WEBHOOK_SECRET:-}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+      - CLAUDE_MODEL=${CLAUDE_MODEL:-claude-sonnet-4-20250514}
+    volumes:
+      # Mount reports directory to persist generated PDFs
+      - ./reports:/app/reports
+      # Mount source for hot reload in development
+      - ./src:/app:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Redis for production queuing
+  # Uncomment for high-volume deployments
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: rhone-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+
+# volumes:
+#   redis_data:

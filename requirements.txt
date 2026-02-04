@@ -1,0 +1,26 @@
+# Rhône Risk Policy Analysis API - Dependencies
+
+# Web Framework
+fastapi==0.109.2
+uvicorn[standard]==0.27.1
+pydantic==2.6.1
+pydantic-settings==2.1.0
+
+# PDF Processing
+pdfplumber==0.10.4
+reportlab==4.1.0
+
+# Anthropic API
+anthropic==0.18.1
+
+# HTTP Client (for webhooks and downloads)
+aiohttp==3.9.3
+
+# Utilities
+python-multipart==0.0.9  # For file uploads
+python-dotenv==1.0.1
+
+# Development
+pytest==8.0.0
+pytest-asyncio==0.23.4
+httpx==0.26.0  # For testing FastAPI
