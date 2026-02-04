@@ -10,6 +10,9 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     """Application settings loaded from environment variables"""
 
+    # Server
+    PORT: int = 8000  # Railway provides this dynamically
+
     # API Keys
     ANTHROPIC_API_KEY: str = ""
     WEBHOOK_SECRET: str = ""

@@ -150,19 +150,22 @@ rhone-policy-api/
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
+├── railway.json           # Railway deployment config
 └── .env.example
 ```
 
 ## Configuration
 
-Environment variables (set in `.env`):
+Environment variables (set in `.env` or Railway dashboard):
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `ANTHROPIC_API_KEY` | Yes | Claude API key |
-| `WEBHOOK_SECRET` | No | Shared secret for webhook verification |
-| `CLAUDE_MODEL` | No | Model to use (default: claude-sonnet-4-20250514) |
-| `ENVIRONMENT` | No | development/staging/production |
+| Variable | Required | Default | Description |
+|----------|----------|---------|-------------|
+| `ANTHROPIC_API_KEY` | Yes | - | Claude API key |
+| `WEBHOOK_SECRET` | No | - | Shared secret for webhook verification |
+| `PORT` | No | 8000 | Server port (Railway sets automatically) |
+| `CORS_ORIGINS` | No | `["*"]` | Allowed CORS origins (JSON array) |
+| `CLAUDE_MODEL` | No | claude-sonnet-4-20250514 | Model to use |
+| `ENVIRONMENT` | No | development | development/staging/production |
 
 ## Development
 
@@ -189,7 +192,30 @@ pytest tests/
 
 ## Deployment
 
-### Docker
+### Railway (Recommended)
+
+1. **Create Railway Account**: Sign up at https://railway.app
+
+2. **Deploy from GitHub**:
+   - Connect your GitHub repository
+   - Railway auto-detects the Dockerfile
+
+3. **Set Environment Variables** in Railway Dashboard:
+   ```
+   ANTHROPIC_API_KEY=sk-ant-api03-your-key
+   WEBHOOK_SECRET=your-secure-secret
+   ENVIRONMENT=production
+   CORS_ORIGINS=["https://your-frontend.vercel.app"]
+   ```
+
+4. **Verify Deployment**:
+   ```bash
+   curl https://your-app.up.railway.app/health
+   ```
+
+Railway automatically provides the `PORT` environment variable.
+
+### Docker (Local/Self-hosted)
 
 ```bash
 docker build -t rhone-policy-api .
