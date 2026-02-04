@@ -10,8 +10,9 @@ services:
       dockerfile: Dockerfile
     container_name: rhone-policy-api
     ports:
-      - "8000:8000"
+      - "${PORT:-8000}:${PORT:-8000}"
     environment:
+      - PORT=${PORT:-8000}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
       - WEBHOOK_SECRET=${WEBHOOK_SECRET:-}
       - ENVIRONMENT=${ENVIRONMENT:-development}
@@ -23,7 +24,7 @@ services:
       - ./src:/app:ro
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD-SHELL", "curl -f http://localhost:${PORT:-8000}/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
