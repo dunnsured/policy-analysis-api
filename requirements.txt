@@ -16,6 +16,9 @@ anthropic==0.18.1
 # HTTP Client (for webhooks and downloads)
 aiohttp==3.9.3
 
+# Supabase Client
+supabase==2.10.0
+
 # Utilities
 python-multipart==0.0.9  # For file uploads
 python-dotenv==1.0.1
