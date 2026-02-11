@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     ANTHROPIC_API_KEY: str = ""
     WEBHOOK_SECRET: str = ""
 
+        # Supabase
+        SUPABASE_URL: str = ""
+    SUPABASE_KEY: str = ""
+
     # Service URLs
     CALLBACK_TIMEOUT: int = 30  # seconds
 
