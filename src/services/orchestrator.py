@@ -14,6 +14,7 @@ from config import settings
 from services.pdf_extractor import extractor
 from services.claude_analyzer import analyzer
 from services.report_generator import generator
+from services.supabase_client import supabase_service
 
 logger = logging.getLogger(__name__)
 
@@ -125,6 +126,16 @@ async def run_policy_analysis(analysis_id: str, payload: Dict[str, Any]):
             "completed_at": datetime.utcnow().isoformat(),
             "processing_time_seconds": _calculate_duration(analysis_id),
         }
+
+                # STEP 5: Store results in Supabase
+                policy_id = payload.get("policy_id")
+                if policy_id:
+                                await supabase_service.store_analysis_result(
+                                                    policy_id=policy_id,
+                                                    analysis_id=analysis_id,
+                                                    analysis_data=result,
+                                                    status="completed"
+                                                )
 
         # Update status to complete
         analysis_status_store[analysis_id].update({
